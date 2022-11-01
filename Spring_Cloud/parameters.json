@@ -2,11 +2,8 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "Spring_support": {
+        "Spring_support_prod_app_name": {
             "value": "spring-prod1"
-        },
-        "location": {
-            "value": "East US"
         }
     }
 }
