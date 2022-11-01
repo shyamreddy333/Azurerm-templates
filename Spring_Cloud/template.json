@@ -2,8 +2,8 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "Spring_support_nonprod_app_name": {
-            "defaultValue": "support-nonprod-app",
+        "Spring_support_prod_app_name": {
+            "defaultValue": "spring-prod1",
             "type": "String"
         }
     },
