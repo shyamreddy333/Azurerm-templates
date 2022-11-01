@@ -1,0 +1,156 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "flexibleServers_support_prod_mysql_name": {
+            "defaultValue": "support-prod1-mysql",
+            "type": "String"
+        },
+        "administratorLogin": {
+              "type": "string"
+        },
+        "administratorLoginPassword": {
+            "type": "securestring"
+        },
+        "location": {
+            "defaultValue": "west-us",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.DBforMySQL/flexibleServers",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[parameters('flexibleServers_support_prod_mysql_name')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "Standard_D2ds_v4",
+                "tier": "GeneralPurpose"
+            },
+            "properties": {
+                "administratorLogin": "[parameters('administratorLogin')]",
+                "administratorLoginPassword": "[parameters('administratorLoginPassword')]",
+                "storage": {
+                    "storageSizeGB": 32,
+                    "iops": 988,
+                    "autoGrow": "Enabled"
+                },
+                "version": "5.7",
+                "availabilityZone": "3",
+                "maintenanceWindow": {
+                    "customWindow": "Disabled",
+                    "dayOfWeek": 0,
+                    "startHour": 0,
+                    "startMinute": 0
+                },
+                "replicationRole": "None",
+                "network": {},
+                "backup": {
+                    "backupRetentionDays": 4,
+                    "geoRedundantBackup": "Disabled"
+                },
+                "highAvailability": {
+                    "mode": "ZoneRedundant",
+                    "standbyAvailabilityZone": "1"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/flexibleServers/databases",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[concat(parameters('flexibleServers_support_prod_mysql_name'), '/information_schema')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/flexibleServers', parameters('flexibleServers_support_prod_mysql_name'))]"
+            ],
+            "properties": {
+                "charset": "utf8",
+                "collation": "utf8_general_ci"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/flexibleServers/databases",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[concat(parameters('flexibleServers_support_prod_mysql_name'), '/mysql')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/flexibleServers', parameters('flexibleServers_support_prod_mysql_name'))]"
+            ],
+            "properties": {
+                "charset": "latin1",
+                "collation": "latin1_swedish_ci"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/flexibleServers/databases",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[concat(parameters('flexibleServers_support_prod_mysql_name'), '/performance_schema')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/flexibleServers', parameters('flexibleServers_support_prod_mysql_name'))]"
+            ],
+            "properties": {
+                "charset": "utf8",
+                "collation": "utf8_general_ci"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/flexibleServers/databases",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[concat(parameters('flexibleServers_support_prod_mysql_name'), '/supportprod1')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/flexibleServers', parameters('flexibleServers_support_prod_mysql_name'))]"
+            ],
+            "properties": {
+                "charset": "latin1",
+                "collation": "latin1_swedish_ci"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/flexibleServers/databases",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[concat(parameters('flexibleServers_support_prod_mysql_name'), '/sys')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/flexibleServers', parameters('flexibleServers_support_prod_mysql_name'))]"
+            ],
+            "properties": {
+                "charset": "utf8",
+                "collation": "utf8_general_ci"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/flexibleServers/firewallRules",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[concat(parameters('flexibleServers_support_prod_mysql_name'), '/ClientIPAddress_2022-8-24_3-56-36')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/flexibleServers', parameters('flexibleServers_support_prod_mysql_name'))]"
+            ],
+            "properties": {
+                "startIpAddress": "115.110.244.40",
+                "endIpAddress": "115.110.244.40"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/flexibleServers/firewallRules",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[concat(parameters('flexibleServers_support_prod_mysql_name'), '/prod1-support-apps-1')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/flexibleServers', parameters('flexibleServers_support_prod_mysql_name'))]"
+            ],
+            "properties": {
+                "startIpAddress": "20.237.70.219",
+                "endIpAddress": "20.237.70.219"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/flexibleServers/firewallRules",
+            "apiVersion": "2021-12-01-preview",
+            "name": "[concat(parameters('flexibleServers_support_prod_mysql_name'), '/prod1-support-apps-2')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/flexibleServers', parameters('flexibleServers_support_prod_mysql_name'))]"
+            ],
+            "properties": {
+                "startIpAddress": "20.237.70.223",
+                "endIpAddress": "20.237.70.223"
+            }
+        }
+    ]
+}

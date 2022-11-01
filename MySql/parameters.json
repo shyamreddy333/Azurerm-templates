@@ -1,0 +1,18 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "flexibleServers_support_prod_mysql_name": {
+            "value": "#support-prod1-mysql#"
+        },
+        "location": {
+            "value": "#west-us#"
+        },
+        "administratorLogin": {
+            "value": "pasupportpd1"
+        },
+        "administratorLoginPassword": {
+            "value": "#password#"
+        }
+    }
+}

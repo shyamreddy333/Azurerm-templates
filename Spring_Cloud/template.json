@@ -1,0 +1,689 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "Spring_support": {
+            "defaultValue": "support-prod-apps",
+            "type": "String"
+        },
+        "location": {
+            "defaultValue": "east-us",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.AppPlatform/Spring",
+            "apiVersion": "2022-09-01-preview",
+            "name": "[parameters('Spring_support')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "S0",
+                "tier": "Standard"
+            },
+            "properties": {
+                "zoneRedundant": true,
+                "networkProfile": {
+                    "outboundType": "loadBalancer"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.AppPlatform/Spring/apps",
+            "apiVersion": "2022-09-01-preview",
+            "name": "[concat(parameters('Spring_support'), '/audit-db')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support'))]"
+            ],
+            "properties": {
+                "addonConfigs": {
+                    "applicationConfigurationService": {},
+                    "serviceRegistry": {}
+                },
+                "public": false,
+                "httpsOnly": false,
+                "temporaryDisk": {
+                    "sizeInGB": 5,
+                    "mountPath": "/tmp"
+                },
+                "persistentDisk": {
+                    "sizeInGB": 0,
+                    "mountPath": "/persistent"
+                },
+                "enableEndToEndTLS": false,
+                "ingressSettings": {
+                    "readTimeoutInSeconds": 300,
+                    "sendTimeoutInSeconds": 60,
+                    "sessionCookieMaxAge": 0,
+                    "sessionAffinity": "None",
+                    "backendProtocol": "Default"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.AppPlatform/Spring/apps",
+            "apiVersion": "2022-09-01-preview",
+            "name": "[concat(parameters('Spring_support'), '/catalog-gw')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support'))]"
+            ],
+            "properties": {
+                "addonConfigs": {
+                    "applicationConfigurationService": {},
+                    "serviceRegistry": {}
+                },
+                "public": true,
+                "httpsOnly": false,
+                "temporaryDisk": {
+                    "sizeInGB": 5,
+                    "mountPath": "/tmp"
+                },
+                "persistentDisk": {
+                    "sizeInGB": 0,
+                    "mountPath": "/persistent"
+                },
+                "enableEndToEndTLS": false,
+                "ingressSettings": {
+                    "readTimeoutInSeconds": 300,
+                    "sendTimeoutInSeconds": 60,
+                    "sessionCookieMaxAge": 0,
+                    "sessionAffinity": "None",
+                    "backendProtocol": "Default"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.AppPlatform/Spring/apps",
+            "apiVersion": "2022-09-01-preview",
+            "name": "[concat(parameters('Spring_support'), '/catalog-msite')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support'))]"
+            ],
+            "properties": {
+                "addonConfigs": {
+                    "applicationConfigurationService": {},
+                    "serviceRegistry": {}
+                },
+                "public": true,
+                "httpsOnly": true,
+                "temporaryDisk": {
+                    "sizeInGB": 5,
+                    "mountPath": "/tmp"
+                },
+                "persistentDisk": {
+                    "sizeInGB": 0,
+                    "mountPath": "/persistent"
+                },
+                "enableEndToEndTLS": false,
+                "ingressSettings": {
+                    "readTimeoutInSeconds": 300,
+                    "sendTimeoutInSeconds": 60,
+                    "sessionCookieMaxAge": 0,
+                    "sessionAffinity": "None",
+                    "backendProtocol": "Default"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.AppPlatform/Spring/apps",
+            "apiVersion": "2022-09-01-preview",
+            "name": "[concat(parameters('Spring_support'), '/config-db')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support'))]"
+            ],
+            "properties": {
+                "addonConfigs": {
+                    "applicationConfigurationService": {},
+                    "serviceRegistry": {}
+                },
+                "public": false,
+                "httpsOnly": false,
+                "temporaryDisk": {
+                    "sizeInGB": 5,
+                    "mountPath": "/tmp"
+                },
+                "persistentDisk": {
+                    "sizeInGB": 0,
+                    "mountPath": "/persistent"
+                },
+                "enableEndToEndTLS": false,
+                "ingressSettings": {
+                    "readTimeoutInSeconds": 300,
+                    "sendTimeoutInSeconds": 60,
+                    "sessionCookieMaxAge": 0,
+                    "sessionAffinity": "None",
+                    "backendProtocol": "Default"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.AppPlatform/Spring/apps",
+            "apiVersion": "2022-09-01-preview",
+            "name": "[concat(parameters('Spring_support'), '/elastic-svc')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support'))]"
+            ],
+            "properties": {
+                "addonConfigs": {
+                    "applicationConfigurationService": {},
+                    "serviceRegistry": {}
+                },
+                "public": false,
+                "httpsOnly": false,
+                "temporaryDisk": {
+                    "sizeInGB": 5,
+                    "mountPath": "/tmp"
+                },
+                "persistentDisk": {
+                    "sizeInGB": 0,
+                    "mountPath": "/persistent"
+                },
+                "enableEndToEndTLS": false,
+                "ingressSettings": {
+                    "readTimeoutInSeconds": 300,
+                    "sendTimeoutInSeconds": 60,
+                    "sessionCookieMaxAge": 0,
+                    "sessionAffinity": "None",
+                    "backendProtocol": "Default"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.AppPlatform/Spring/apps",
+            "apiVersion": "2022-09-01-preview",
+            "name": "[concat(parameters('Spring_support'), '/file-processor-svc')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support'))]"
+            ],
+            "properties": {
+                "addonConfigs": {
+                    "applicationConfigurationService": {},
+                    "serviceRegistry": {}
+                },
+                "public": false,
+                "httpsOnly": false,
+                "temporaryDisk": {
+                    "sizeInGB": 5,
+                    "mountPath": "/tmp"
+                },
+                "persistentDisk": {
+                    "sizeInGB": 50,
+                    "mountPath": "/persistent"
+                },
+                "enableEndToEndTLS": false,
+                "ingressSettings": {
+                    "readTimeoutInSeconds": 300,
+                    "sendTimeoutInSeconds": 60,
+                    "sessionCookieMaxAge": 0,
+                    "sessionAffinity": "None",
+                    "backendProtocol": "Default"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.AppPlatform/Spring/apps",
+            "apiVersion": "2022-09-01-preview",
+            "name": "[concat(parameters('Spring_support'), '/supplier-db')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support'))]"
+            ],
+            "properties": {
+                "addonConfigs": {
+                    "applicationConfigurationService": {},
+                    "serviceRegistry": {}
+                },
+                "public": false,
+                "httpsOnly": false,
+                "temporaryDisk": {
+                    "sizeInGB": 5,
+                    "mountPath": "/tmp"
+                },
+                "persistentDisk": {
+                    "sizeInGB": 0,
+                    "mountPath": "/persistent"
+                },
+                "enableEndToEndTLS": false,
+                "ingressSettings": {
+                    "readTimeoutInSeconds": 300,
+                    "sendTimeoutInSeconds": 60,
+                    "sessionCookieMaxAge": 0,
+                    "sessionAffinity": "None",
+                    "backendProtocol": "Default"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.AppPlatform/Spring/certificates",
+            "apiVersion": "2022-09-01-preview",
+            "name": "[concat(parameters('Spring_support'), '/support-prod-certificate')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support'))]"
+            ],
+            "properties": {
+                "vaultUri": "https://support-prod-keyvault.vault.azure.net",
+                "keyVaultCertName": "support-prod-certificate",
+                "certVersion": "91b22199db4e47e0bc7b4bfc8e337e32",
+                "excludePrivateKey": false,
+                "type": "KeyVaultCertificate"
+            }
+        },
+        {
+            "type": "Microsoft.AppPlatform/Spring/apps/deployments",
+            "apiVersion": "2022-09-01-preview",
+            "name": "[concat(parameters('Spring_support'), '/audit-db/default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('Spring_support'), 'audit-db')]",
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support'))]"
+            ],
+            "sku": {
+                "name": "S0",
+                "tier": "Standard",
+                "capacity": 1
+            },
+            "properties": {
+                "deploymentSettings": {
+                    "resourceRequests": {
+                        "cpu": "1000m",
+                        "memory": "1Gi"
+                    },
+                    "environmentVariables": {
+                        "spring.profiles.active": "prod",
+                        "db-server": "jdbc:mysql://support-prod-mysql.mysql.database.azure.com:3306/supportprod?useSSL=true",
+                        "SupportDBPwd": "ASDF34wq23qedaSdsavfg54twae",
+                        "SupportDBUsr": "pasupportpd"
+                    },
+                    "terminationGracePeriodSeconds": 90,
+                    "livenessProbe": {
+                        "disableProbe": false,
+                        "failureThreshold": 24,
+                        "initialDelaySeconds": 60,
+                        "periodSeconds": 10,
+                        "successThreshold": 1,
+                        "timeoutSeconds": 1,
+                        "probeAction": {
+                            "type": "TCPSocketAction"
+                        }
+                    },
+                    "readinessProbe": {
+                        "disableProbe": false,
+                        "failureThreshold": 3,
+                        "initialDelaySeconds": 0,
+                        "periodSeconds": 10,
+                        "successThreshold": 1,
+                        "timeoutSeconds": 1,
+                        "probeAction": {
+                            "type": "TCPSocketAction"
+                        }
+                    }
+                },
+                "active": true,
+                "source": {}
+            }
+        },
+        {
+            "type": "Microsoft.AppPlatform/Spring/apps/deployments",
+            "apiVersion": "2022-09-01-preview",
+            "name": "[concat(parameters('Spring_support'), '/catalog-gw/default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('Spring_support'), 'catalog-gw')]",
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support'))]"
+            ],
+            "sku": {
+                "name": "S0",
+                "tier": "Standard",
+                "capacity": 1
+            },
+            "properties": {
+                "deploymentSettings": {
+                    "resourceRequests": {
+                        "cpu": "1000m",
+                        "memory": "1Gi"
+                    },
+                    "environmentVariables": {
+                        "spring.profiles.active": "prod"
+                    },
+                    "terminationGracePeriodSeconds": 90,
+                    "livenessProbe": {
+                        "disableProbe": false,
+                        "failureThreshold": 24,
+                        "initialDelaySeconds": 60,
+                        "periodSeconds": 10,
+                        "successThreshold": 1,
+                        "timeoutSeconds": 1,
+                        "probeAction": {
+                            "type": "TCPSocketAction"
+                        }
+                    },
+                    "readinessProbe": {
+                        "disableProbe": false,
+                        "failureThreshold": 3,
+                        "initialDelaySeconds": 0,
+                        "periodSeconds": 10,
+                        "successThreshold": 1,
+                        "timeoutSeconds": 1,
+                        "probeAction": {
+                            "type": "TCPSocketAction"
+                        }
+                    }
+                },
+                "active": true,
+                "source": {}
+            }
+        },
+        {
+            "type": "Microsoft.AppPlatform/Spring/apps/deployments",
+            "apiVersion": "2022-09-01-preview",
+            "name": "[concat(parameters('Spring_support'), '/catalog-msite/default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('Spring_support'), 'catalog-msite')]",
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support'))]"
+            ],
+            "sku": {
+                "name": "S0",
+                "tier": "Standard",
+                "capacity": 1
+            },
+            "properties": {
+                "deploymentSettings": {
+                    "resourceRequests": {
+                        "cpu": "1000m",
+                        "memory": "1Gi"
+                    },
+                    "environmentVariables": {
+                        "spring.profiles.active": "prod",
+                        "ad-client-secret": "kI_8Q~JJ-YqQxb~~jL_TiGR02Vcm5TsZRU8jhaV6",
+                        "containerstorage-connection": "DefaultEndpointsProtocol=https;AccountName=pasupportprodstorageacct;AccountKey=wGOYKC19h3mDZy489wn8cDNKIYmva1HD/OPwJWGlzhE+sZT9Ztw4g/3doaakxOxF7DbQ1cbRsvSg+AStdHbYfA==;EndpointSuffix=core.windows.net",
+                        "containerstorage": "pafileupload-container"
+                    },
+                    "terminationGracePeriodSeconds": 90,
+                    "livenessProbe": {
+                        "disableProbe": false,
+                        "failureThreshold": 24,
+                        "initialDelaySeconds": 60,
+                        "periodSeconds": 10,
+                        "successThreshold": 1,
+                        "timeoutSeconds": 1,
+                        "probeAction": {
+                            "type": "TCPSocketAction"
+                        }
+                    },
+                    "readinessProbe": {
+                        "disableProbe": false,
+                        "failureThreshold": 3,
+                        "initialDelaySeconds": 0,
+                        "periodSeconds": 10,
+                        "successThreshold": 1,
+                        "timeoutSeconds": 1,
+                        "probeAction": {
+                            "type": "TCPSocketAction"
+                        }
+                    }
+                },
+                "active": true,
+                "source": {}
+            }
+        },
+        {
+            "type": "Microsoft.AppPlatform/Spring/apps/deployments",
+            "apiVersion": "2022-09-01-preview",
+            "name": "[concat(parameters('Spring_support'), '/config-db/default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('Spring_support'), 'config-db')]",
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support'))]"
+            ],
+            "sku": {
+                "name": "S0",
+                "tier": "Standard",
+                "capacity": 1
+            },
+            "properties": {
+                "deploymentSettings": {
+                    "resourceRequests": {
+                        "cpu": "1000m",
+                        "memory": "1Gi"
+                    },
+                    "environmentVariables": {
+                        "spring.profiles.active": "prod",
+                        "SupportDBPwd": "ASDF34wq23qedaSdsavfg54twae",
+                        "SupportDBUsr": "pasupportpd",
+                        "db-server": "jdbc:mysql://support-prod-mysql.mysql.database.azure.com:3306/supportprod?useSSL=true"
+                    },
+                    "terminationGracePeriodSeconds": 90,
+                    "livenessProbe": {
+                        "disableProbe": false,
+                        "failureThreshold": 24,
+                        "initialDelaySeconds": 60,
+                        "periodSeconds": 10,
+                        "successThreshold": 1,
+                        "timeoutSeconds": 1,
+                        "probeAction": {
+                            "type": "TCPSocketAction"
+                        }
+                    },
+                    "readinessProbe": {
+                        "disableProbe": false,
+                        "failureThreshold": 3,
+                        "initialDelaySeconds": 0,
+                        "periodSeconds": 10,
+                        "successThreshold": 1,
+                        "timeoutSeconds": 1,
+                        "probeAction": {
+                            "type": "TCPSocketAction"
+                        }
+                    }
+                },
+                "active": true,
+                "source": {}
+            }
+        },
+        {
+            "type": "Microsoft.AppPlatform/Spring/apps/deployments",
+            "apiVersion": "2022-09-01-preview",
+            "name": "[concat(parameters('Spring_support'), '/elastic-svc/default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('Spring_support'), 'elastic-svc')]",
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support'))]"
+            ],
+            "sku": {
+                "name": "S0",
+                "tier": "Standard",
+                "capacity": 1
+            },
+            "properties": {
+                "deploymentSettings": {
+                    "resourceRequests": {
+                        "cpu": "1000m",
+                        "memory": "1Gi"
+                    },
+                    "environmentVariables": {
+                        "spring.profiles.active": "prod",
+                        "elasticHost": "f42769f506d74074942cb94be430a7de.eastus.azure.elastic-cloud.com",
+                        "elasticPort": "9243",
+                        "elasticUsr": "elastic",
+                        "elasticSecret": "vawGCVsBgKTOIy8JRqiOQFXG"
+                    },
+                    "terminationGracePeriodSeconds": 90,
+                    "livenessProbe": {
+                        "disableProbe": false,
+                        "failureThreshold": 24,
+                        "initialDelaySeconds": 60,
+                        "periodSeconds": 10,
+                        "successThreshold": 1,
+                        "timeoutSeconds": 1,
+                        "probeAction": {
+                            "type": "TCPSocketAction"
+                        }
+                    },
+                    "readinessProbe": {
+                        "disableProbe": false,
+                        "failureThreshold": 3,
+                        "initialDelaySeconds": 0,
+                        "periodSeconds": 10,
+                        "successThreshold": 1,
+                        "timeoutSeconds": 1,
+                        "probeAction": {
+                            "type": "TCPSocketAction"
+                        }
+                    }
+                },
+                "active": true,
+                "source": {}
+            }
+        },
+        {
+            "type": "Microsoft.AppPlatform/Spring/apps/deployments",
+            "apiVersion": "2022-09-01-preview",
+            "name": "[concat(parameters('Spring_support'), '/file-processor-svc/default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('Spring_support'), 'file-processor-svc')]",
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support'))]"
+            ],
+            "sku": {
+                "name": "S0",
+                "tier": "Standard",
+                "capacity": 1
+            },
+            "properties": {
+                "deploymentSettings": {
+                    "resourceRequests": {
+                        "cpu": "1",
+                        "memory": "1Gi"
+                    },
+                    "environmentVariables": {
+                        "spring.profiles.active": "prod",
+                        "SupportDBPwd": "ASDF34wq23qedaSdsavfg54twae",
+                        "SupportDBUsr": "pasupportpd",
+                        "db-server": "jdbc:mysql://support-prod-mysql.mysql.database.azure.com:3306/supportprod?useSSL=true",
+                        "containerstorage": "pafileupload-container",
+                        "containerstorage-connection": "DefaultEndpointsProtocol=https;AccountName=pasupportprodstorageacct;AccountKey=wGOYKC19h3mDZy489wn8cDNKIYmva1HD/OPwJWGlzhE+sZT9Ztw4g/3doaakxOxF7DbQ1cbRsvSg+AStdHbYfA==;EndpointSuffix=core.windows.net"
+                    },
+                    "terminationGracePeriodSeconds": 90,
+                    "livenessProbe": {
+                        "disableProbe": false,
+                        "failureThreshold": 24,
+                        "initialDelaySeconds": 60,
+                        "periodSeconds": 10,
+                        "successThreshold": 1,
+                        "timeoutSeconds": 1,
+                        "probeAction": {
+                            "type": "TCPSocketAction"
+                        }
+                    },
+                    "readinessProbe": {
+                        "disableProbe": false,
+                        "failureThreshold": 3,
+                        "initialDelaySeconds": 0,
+                        "periodSeconds": 10,
+                        "successThreshold": 1,
+                        "timeoutSeconds": 1,
+                        "probeAction": {
+                            "type": "TCPSocketAction"
+                        }
+                    }
+                },
+                "active": true,
+                "source": {}
+            }
+        },
+        {
+            "type": "Microsoft.AppPlatform/Spring/apps/deployments",
+            "apiVersion": "2022-09-01-preview",
+            "name": "[concat(parameters('Spring_support'), '/supplier-db/default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('Spring_support'), 'supplier-db')]",
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support'))]"
+            ],
+            "sku": {
+                "name": "S0",
+                "tier": "Standard",
+                "capacity": 1
+            },
+            "properties": {
+                "deploymentSettings": {
+                    "resourceRequests": {
+                        "cpu": "1000m",
+                        "memory": "1Gi"
+                    },
+                    "environmentVariables": {
+                        "spring.profiles.active": "prod",
+                        "SupportDBPwd": "ASDF34wq23qedaSdsavfg54twae",
+                        "SupportDBUsr": "pasupportpd",
+                        "db-server": "jdbc:mysql://support-prod-mysql.mysql.database.azure.com:3306/supportprod?useSSL=true"
+                    },
+                    "terminationGracePeriodSeconds": 90,
+                    "livenessProbe": {
+                        "disableProbe": false,
+                        "failureThreshold": 24,
+                        "initialDelaySeconds": 60,
+                        "periodSeconds": 10,
+                        "successThreshold": 1,
+                        "timeoutSeconds": 1,
+                        "probeAction": {
+                            "type": "TCPSocketAction"
+                        }
+                    },
+                    "readinessProbe": {
+                        "disableProbe": false,
+                        "failureThreshold": 3,
+                        "initialDelaySeconds": 0,
+                        "periodSeconds": 10,
+                        "successThreshold": 1,
+                        "timeoutSeconds": 1,
+                        "probeAction": {
+                            "type": "TCPSocketAction"
+                        }
+                    }
+                },
+                "active": true,
+                "source": {}
+            }
+        },
+        {
+            "type": "Microsoft.AppPlatform/Spring/apps/domains",
+            "apiVersion": "2022-09-01-preview",
+            "name": "[concat(parameters('Spring_support'), '/catalog-msite/*.procureanalytics.com')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('Spring_support'), 'catalog-msite')]",
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support'))]"
+            ],
+            "properties": {
+                "thumbprint": "cf0b6d8a45e7d34150ab0714ff341005a83202eb",
+                "certName": "support-prod-certificate"
+            }
+        },
+        {
+            "type": "Microsoft.AppPlatform/Spring/apps/domains",
+            "apiVersion": "2022-09-01-preview",
+            "name": "[concat(parameters('Spring_support'), '/catalog-msite/internal.procureanalytics.com')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('Spring_support'), 'catalog-msite')]",
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support'))]"
+            ],
+            "properties": {
+                "thumbprint": "cf0b6d8a45e7d34150ab0714ff341005a83202eb",
+                "certName": "support-prod-certificate"
+            }
+        },
+        {
+            "type": "Microsoft.AppPlatform/Spring/apps/domains",
+            "apiVersion": "2022-09-01-preview",
+            "name": "[concat(parameters('Spring_support'), '/catalog-msite/support.procureanalytics.com')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('Spring_support'), 'catalog-msite')]",
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support'))]"
+            ],
+            "properties": {
+                "thumbprint": "cf0b6d8a45e7d34150ab0714ff341005a83202eb",
+                "certName": "support-prod-certificate"
+            }
+        }
+    ]
+}
