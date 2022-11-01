@@ -2,12 +2,8 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "Spring_support": {
-            "defaultValue": "support-prod-apps",
-            "type": "String"
-        },
-        "location": {
-            "defaultValue": "east-us",
+        "Spring_support_nonprod_app_name": {
+            "defaultValue": "support-nonprod-app",
             "type": "String"
         }
     },
@@ -16,14 +12,17 @@
         {
             "type": "Microsoft.AppPlatform/Spring",
             "apiVersion": "2022-09-01-preview",
-            "name": "[parameters('Spring_support')]",
-            "location": "[parameters('location')]",
+            "name": "[parameters('Spring_support_nonprod_app_name')]",
+            "location": "eastus2",
+            "tags": {
+                "application": "springapps"
+            },
             "sku": {
                 "name": "S0",
                 "tier": "Standard"
             },
             "properties": {
-                "zoneRedundant": true,
+                "zoneRedundant": false,
                 "networkProfile": {
                     "outboundType": "loadBalancer"
                 }
@@ -32,10 +31,10 @@
         {
             "type": "Microsoft.AppPlatform/Spring/apps",
             "apiVersion": "2022-09-01-preview",
-            "name": "[concat(parameters('Spring_support'), '/audit-db')]",
-            "location": "[parameters('location')]",
+            "name": "[concat(parameters('Spring_support_nonprod_app_name'), '/audit-db')]",
+            "location": "eastus2",
             "dependsOn": [
-                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support'))]"
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support_nonprod_app_name'))]"
             ],
             "properties": {
                 "addonConfigs": {
@@ -65,10 +64,10 @@
         {
             "type": "Microsoft.AppPlatform/Spring/apps",
             "apiVersion": "2022-09-01-preview",
-            "name": "[concat(parameters('Spring_support'), '/catalog-gw')]",
-            "location": "[parameters('location')]",
+            "name": "[concat(parameters('Spring_support_nonprod_app_name'), '/catalog-gw')]",
+            "location": "eastus2",
             "dependsOn": [
-                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support'))]"
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support_nonprod_app_name'))]"
             ],
             "properties": {
                 "addonConfigs": {
@@ -98,10 +97,10 @@
         {
             "type": "Microsoft.AppPlatform/Spring/apps",
             "apiVersion": "2022-09-01-preview",
-            "name": "[concat(parameters('Spring_support'), '/catalog-msite')]",
-            "location": "[parameters('location')]",
+            "name": "[concat(parameters('Spring_support_nonprod_app_name'), '/catalog-msite')]",
+            "location": "eastus2",
             "dependsOn": [
-                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support'))]"
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support_nonprod_app_name'))]"
             ],
             "properties": {
                 "addonConfigs": {
@@ -109,7 +108,7 @@
                     "serviceRegistry": {}
                 },
                 "public": true,
-                "httpsOnly": true,
+                "httpsOnly": false,
                 "temporaryDisk": {
                     "sizeInGB": 5,
                     "mountPath": "/tmp"
@@ -131,10 +130,10 @@
         {
             "type": "Microsoft.AppPlatform/Spring/apps",
             "apiVersion": "2022-09-01-preview",
-            "name": "[concat(parameters('Spring_support'), '/config-db')]",
-            "location": "[parameters('location')]",
+            "name": "[concat(parameters('Spring_support_nonprod_app_name'), '/config-db')]",
+            "location": "eastus2",
             "dependsOn": [
-                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support'))]"
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support_nonprod_app_name'))]"
             ],
             "properties": {
                 "addonConfigs": {
@@ -164,10 +163,10 @@
         {
             "type": "Microsoft.AppPlatform/Spring/apps",
             "apiVersion": "2022-09-01-preview",
-            "name": "[concat(parameters('Spring_support'), '/elastic-svc')]",
-            "location": "[parameters('location')]",
+            "name": "[concat(parameters('Spring_support_nonprod_app_name'), '/elastic-svc')]",
+            "location": "eastus2",
             "dependsOn": [
-                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support'))]"
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support_nonprod_app_name'))]"
             ],
             "properties": {
                 "addonConfigs": {
@@ -197,17 +196,17 @@
         {
             "type": "Microsoft.AppPlatform/Spring/apps",
             "apiVersion": "2022-09-01-preview",
-            "name": "[concat(parameters('Spring_support'), '/file-processor-svc')]",
-            "location": "[parameters('location')]",
+            "name": "[concat(parameters('Spring_support_nonprod_app_name'), '/file-processor-svc')]",
+            "location": "eastus2",
             "dependsOn": [
-                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support'))]"
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support_nonprod_app_name'))]"
             ],
             "properties": {
                 "addonConfigs": {
                     "applicationConfigurationService": {},
                     "serviceRegistry": {}
                 },
-                "public": false,
+                "public": true,
                 "httpsOnly": false,
                 "temporaryDisk": {
                     "sizeInGB": 5,
@@ -230,10 +229,10 @@
         {
             "type": "Microsoft.AppPlatform/Spring/apps",
             "apiVersion": "2022-09-01-preview",
-            "name": "[concat(parameters('Spring_support'), '/supplier-db')]",
-            "location": "[parameters('location')]",
+            "name": "[concat(parameters('Spring_support_nonprod_app_name'), '/supplier-db')]",
+            "location": "eastus2",
             "dependsOn": [
-                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support'))]"
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support_nonprod_app_name'))]"
             ],
             "properties": {
                 "addonConfigs": {
@@ -261,27 +260,12 @@
             }
         },
         {
-            "type": "Microsoft.AppPlatform/Spring/certificates",
-            "apiVersion": "2022-09-01-preview",
-            "name": "[concat(parameters('Spring_support'), '/support-prod-certificate')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support'))]"
-            ],
-            "properties": {
-                "vaultUri": "https://support-prod-keyvault.vault.azure.net",
-                "keyVaultCertName": "support-prod-certificate",
-                "certVersion": "91b22199db4e47e0bc7b4bfc8e337e32",
-                "excludePrivateKey": false,
-                "type": "KeyVaultCertificate"
-            }
-        },
-        {
             "type": "Microsoft.AppPlatform/Spring/apps/deployments",
             "apiVersion": "2022-09-01-preview",
-            "name": "[concat(parameters('Spring_support'), '/audit-db/default')]",
+            "name": "[concat(parameters('Spring_support_nonprod_app_name'), '/audit-db/default')]",
             "dependsOn": [
-                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('Spring_support'), 'audit-db')]",
-                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support'))]"
+                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('Spring_support_nonprod_app_name'), 'audit-db')]",
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support_nonprod_app_name'))]"
             ],
             "sku": {
                 "name": "S0",
@@ -295,10 +279,10 @@
                         "memory": "1Gi"
                     },
                     "environmentVariables": {
-                        "spring.profiles.active": "prod",
-                        "db-server": "jdbc:mysql://support-prod-mysql.mysql.database.azure.com:3306/supportprod?useSSL=true",
-                        "SupportDBPwd": "ASDF34wq23qedaSdsavfg54twae",
-                        "SupportDBUsr": "pasupportpd"
+                        "spring.profiles.active": "test",
+                        "db-server": "jdbc:mysql://support-nonprod-mysql.mysql.database.azure.com:3306/nonprod_support?useSSL=true&requireSSL=false",
+                        "SupportDBPwd": "Asdfsddfasdf123zxc$3453wr",
+                        "SupportDBUsr": "nonprodadm@support-nonprod-mysql"
                     },
                     "terminationGracePeriodSeconds": 90,
                     "livenessProbe": {
@@ -324,17 +308,16 @@
                         }
                     }
                 },
-                "active": true,
-                "source": {}
+                "active": true
             }
         },
         {
             "type": "Microsoft.AppPlatform/Spring/apps/deployments",
             "apiVersion": "2022-09-01-preview",
-            "name": "[concat(parameters('Spring_support'), '/catalog-gw/default')]",
+            "name": "[concat(parameters('Spring_support_nonprod_app_name'), '/catalog-gw/default')]",
             "dependsOn": [
-                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('Spring_support'), 'catalog-gw')]",
-                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support'))]"
+                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('Spring_support_nonprod_app_name'), 'catalog-gw')]",
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support_nonprod_app_name'))]"
             ],
             "sku": {
                 "name": "S0",
@@ -348,7 +331,7 @@
                         "memory": "1Gi"
                     },
                     "environmentVariables": {
-                        "spring.profiles.active": "prod"
+                        "spring.profiles.active": "test"
                     },
                     "terminationGracePeriodSeconds": 90,
                     "livenessProbe": {
@@ -374,17 +357,16 @@
                         }
                     }
                 },
-                "active": true,
-                "source": {}
+                "active": true
             }
         },
         {
             "type": "Microsoft.AppPlatform/Spring/apps/deployments",
             "apiVersion": "2022-09-01-preview",
-            "name": "[concat(parameters('Spring_support'), '/catalog-msite/default')]",
+            "name": "[concat(parameters('Spring_support_nonprod_app_name'), '/catalog-msite/default')]",
             "dependsOn": [
-                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('Spring_support'), 'catalog-msite')]",
-                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support'))]"
+                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('Spring_support_nonprod_app_name'), 'catalog-msite')]",
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support_nonprod_app_name'))]"
             ],
             "sku": {
                 "name": "S0",
@@ -398,10 +380,8 @@
                         "memory": "1Gi"
                     },
                     "environmentVariables": {
-                        "spring.profiles.active": "prod",
-                        "ad-client-secret": "kI_8Q~JJ-YqQxb~~jL_TiGR02Vcm5TsZRU8jhaV6",
-                        "containerstorage-connection": "DefaultEndpointsProtocol=https;AccountName=pasupportprodstorageacct;AccountKey=wGOYKC19h3mDZy489wn8cDNKIYmva1HD/OPwJWGlzhE+sZT9Ztw4g/3doaakxOxF7DbQ1cbRsvSg+AStdHbYfA==;EndpointSuffix=core.windows.net",
-                        "containerstorage": "pafileupload-container"
+                        "spring.profiles.active": "test",
+                        "ad-client-secret": "a4g8Q~PEPh9KT0-FPC_Oag_cDA1TFigAbFwRfbVn"
                     },
                     "terminationGracePeriodSeconds": 90,
                     "livenessProbe": {
@@ -427,17 +407,16 @@
                         }
                     }
                 },
-                "active": true,
-                "source": {}
+                "active": true
             }
         },
         {
             "type": "Microsoft.AppPlatform/Spring/apps/deployments",
             "apiVersion": "2022-09-01-preview",
-            "name": "[concat(parameters('Spring_support'), '/config-db/default')]",
+            "name": "[concat(parameters('Spring_support_nonprod_app_name'), '/config-db/default')]",
             "dependsOn": [
-                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('Spring_support'), 'config-db')]",
-                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support'))]"
+                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('Spring_support_nonprod_app_name'), 'config-db')]",
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support_nonprod_app_name'))]"
             ],
             "sku": {
                 "name": "S0",
@@ -451,10 +430,10 @@
                         "memory": "1Gi"
                     },
                     "environmentVariables": {
-                        "spring.profiles.active": "prod",
-                        "SupportDBPwd": "ASDF34wq23qedaSdsavfg54twae",
-                        "SupportDBUsr": "pasupportpd",
-                        "db-server": "jdbc:mysql://support-prod-mysql.mysql.database.azure.com:3306/supportprod?useSSL=true"
+                        "spring.profiles.active": "test",
+                        "SupportDBUsr": "nonprodadm@support-nonprod-mysql",
+                        "SupportDBPwd": "Asdfsddfasdf123zxc$3453wr",
+                        "db-server": "jdbc:mysql://support-nonprod-mysql.mysql.database.azure.com:3306/nonprod_support?useSSL=true&requireSSL=false"
                     },
                     "terminationGracePeriodSeconds": 90,
                     "livenessProbe": {
@@ -480,17 +459,16 @@
                         }
                     }
                 },
-                "active": true,
-                "source": {}
+                "active": true
             }
         },
         {
             "type": "Microsoft.AppPlatform/Spring/apps/deployments",
             "apiVersion": "2022-09-01-preview",
-            "name": "[concat(parameters('Spring_support'), '/elastic-svc/default')]",
+            "name": "[concat(parameters('Spring_support_nonprod_app_name'), '/elastic-svc/default')]",
             "dependsOn": [
-                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('Spring_support'), 'elastic-svc')]",
-                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support'))]"
+                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('Spring_support_nonprod_app_name'), 'elastic-svc')]",
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support_nonprod_app_name'))]"
             ],
             "sku": {
                 "name": "S0",
@@ -504,11 +482,11 @@
                         "memory": "1Gi"
                     },
                     "environmentVariables": {
-                        "spring.profiles.active": "prod",
-                        "elasticHost": "f42769f506d74074942cb94be430a7de.eastus.azure.elastic-cloud.com",
+                        "spring.profiles.active": "test",
+                        "elasticHost": "2f587dfbb79141eea2dfc2941cfd49c8.eastus2.azure.elastic-cloud.com",
                         "elasticPort": "9243",
                         "elasticUsr": "elastic",
-                        "elasticSecret": "vawGCVsBgKTOIy8JRqiOQFXG"
+                        "elasticSecret": "ha5XoHIwkkQhQCvN0u0AClDW"
                     },
                     "terminationGracePeriodSeconds": 90,
                     "livenessProbe": {
@@ -534,17 +512,16 @@
                         }
                     }
                 },
-                "active": true,
-                "source": {}
+                "active": true
             }
         },
         {
             "type": "Microsoft.AppPlatform/Spring/apps/deployments",
             "apiVersion": "2022-09-01-preview",
-            "name": "[concat(parameters('Spring_support'), '/file-processor-svc/default')]",
+            "name": "[concat(parameters('Spring_support_nonprod_app_name'), '/file-processor-svc/default')]",
             "dependsOn": [
-                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('Spring_support'), 'file-processor-svc')]",
-                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support'))]"
+                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('Spring_support_nonprod_app_name'), 'file-processor-svc')]",
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support_nonprod_app_name'))]"
             ],
             "sku": {
                 "name": "S0",
@@ -558,12 +535,10 @@
                         "memory": "1Gi"
                     },
                     "environmentVariables": {
-                        "spring.profiles.active": "prod",
-                        "SupportDBPwd": "ASDF34wq23qedaSdsavfg54twae",
-                        "SupportDBUsr": "pasupportpd",
-                        "db-server": "jdbc:mysql://support-prod-mysql.mysql.database.azure.com:3306/supportprod?useSSL=true",
-                        "containerstorage": "pafileupload-container",
-                        "containerstorage-connection": "DefaultEndpointsProtocol=https;AccountName=pasupportprodstorageacct;AccountKey=wGOYKC19h3mDZy489wn8cDNKIYmva1HD/OPwJWGlzhE+sZT9Ztw4g/3doaakxOxF7DbQ1cbRsvSg+AStdHbYfA==;EndpointSuffix=core.windows.net"
+                        "spring.profiles.active": "test",
+                        "SupportDBUsr": "nonprodadm@support-nonprod-mysql",
+                        "SupportDBPwd": "Asdfsddfasdf123zxc$3453wr",
+                        "db-server": "jdbc:mysql://support-nonprod-mysql.mysql.database.azure.com:3306/nonprod_support?useSSL=true&requireSSL=false"
                     },
                     "terminationGracePeriodSeconds": 90,
                     "livenessProbe": {
@@ -589,17 +564,16 @@
                         }
                     }
                 },
-                "active": true,
-                "source": {}
+                "active": true
             }
         },
         {
             "type": "Microsoft.AppPlatform/Spring/apps/deployments",
             "apiVersion": "2022-09-01-preview",
-            "name": "[concat(parameters('Spring_support'), '/supplier-db/default')]",
+            "name": "[concat(parameters('Spring_support_nonprod_app_name'), '/supplier-db/default')]",
             "dependsOn": [
-                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('Spring_support'), 'supplier-db')]",
-                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support'))]"
+                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('Spring_support_nonprod_app_name'), 'supplier-db')]",
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support_nonprod_app_name'))]"
             ],
             "sku": {
                 "name": "S0",
@@ -613,10 +587,10 @@
                         "memory": "1Gi"
                     },
                     "environmentVariables": {
-                        "spring.profiles.active": "prod",
-                        "SupportDBPwd": "ASDF34wq23qedaSdsavfg54twae",
-                        "SupportDBUsr": "pasupportpd",
-                        "db-server": "jdbc:mysql://support-prod-mysql.mysql.database.azure.com:3306/supportprod?useSSL=true"
+                        "spring.profiles.active": "test",
+                        "db-server": "jdbc:mysql://support-nonprod-mysql.mysql.database.azure.com:3306/nonprod_support?useSSL=true&requireSSL=false",
+                        "SupportDBPwd": "Asdfsddfasdf123zxc$3453wr",
+                        "SupportDBUsr": "nonprodadm@support-nonprod-mysql"
                     },
                     "terminationGracePeriodSeconds": 90,
                     "livenessProbe": {
@@ -642,47 +616,7 @@
                         }
                     }
                 },
-                "active": true,
-                "source": {}
-            }
-        },
-        {
-            "type": "Microsoft.AppPlatform/Spring/apps/domains",
-            "apiVersion": "2022-09-01-preview",
-            "name": "[concat(parameters('Spring_support'), '/catalog-msite/*.procureanalytics.com')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('Spring_support'), 'catalog-msite')]",
-                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support'))]"
-            ],
-            "properties": {
-                "thumbprint": "cf0b6d8a45e7d34150ab0714ff341005a83202eb",
-                "certName": "support-prod-certificate"
-            }
-        },
-        {
-            "type": "Microsoft.AppPlatform/Spring/apps/domains",
-            "apiVersion": "2022-09-01-preview",
-            "name": "[concat(parameters('Spring_support'), '/catalog-msite/internal.procureanalytics.com')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('Spring_support'), 'catalog-msite')]",
-                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support'))]"
-            ],
-            "properties": {
-                "thumbprint": "cf0b6d8a45e7d34150ab0714ff341005a83202eb",
-                "certName": "support-prod-certificate"
-            }
-        },
-        {
-            "type": "Microsoft.AppPlatform/Spring/apps/domains",
-            "apiVersion": "2022-09-01-preview",
-            "name": "[concat(parameters('Spring_support'), '/catalog-msite/support.procureanalytics.com')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('Spring_support'), 'catalog-msite')]",
-                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support'))]"
-            ],
-            "properties": {
-                "thumbprint": "cf0b6d8a45e7d34150ab0714ff341005a83202eb",
-                "certName": "support-prod-certificate"
+                "active": true
             }
         }
     ]
