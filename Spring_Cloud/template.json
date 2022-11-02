@@ -9,12 +9,33 @@
     },
     "variables": {},
     "resources": [
-        {
-            "type": "Microsoft.AppPlatform/Spring",
-            "apiVersion": "2022-09-01-preview",
-            "name": "[parameters('Spring_support_prod1_name')]",
-            "location": "eastus",
-            "sku": {
+    {
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "myVnet",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2018-11-01",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "10.0.0.0/16"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "mySubnet",
+            "properties": {
+              "addressPrefix": "10.0.0.0/16"
+            }
+          }
+        ]
+      }
+    },
+      {
+          "type": "Microsoft.AppPlatform/Spring",
+          "apiVersion": "2022-09-01-preview",
+          "name": "[parameters('Spring_support_prod1_name')]",
+          "location": "eastus",
+          "sku": {
                 "name": "B0",
                 "tier": "Basic"
             },
@@ -102,8 +123,7 @@
                         }
                     }
                 },
-                "active": true,
-                "source": {}
+                "active": true
             }
         }
     ]
