@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "name": {
-            "value": "spring-prod1"
+            "value": "spring-prod2"
         },
         "location": {
             "value": "East US"
