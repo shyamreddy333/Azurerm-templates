@@ -2,36 +2,37 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "Spring_support_prod_apps_name": {
-            "defaultValue": "support-prod-apps",
-            "type": "String"
+        "name": {
+            "type": "string"
+        },
+        "location": {
+            "type": "string"
         }
     },
-    "variables": {},
     "resources": [
         {
+            "name": "[parameters('name')]",
+            "location": "[parameters('location')]",
             "type": "Microsoft.AppPlatform/Spring",
             "apiVersion": "2022-09-01-preview",
-            "name": "[parameters('Spring_support_prod_apps_name')]",
-            "location": "eastus",
             "sku": {
-                "name": "S0",
-                "tier": "Standard"
+                "name": "B0",
+                "tier": "Basic"
             },
             "properties": {
-                "zoneRedundant": true,
-                "networkProfile": {
-                    "outboundType": "loadBalancer"
-                }
-            }
+                "zoneRedundant": false
+            },
+            "dependsOn": [],
+            "resources": []
         },
+        
         {
             "type": "Microsoft.AppPlatform/Spring/apps",
             "apiVersion": "2022-09-01-preview",
-            "name": "[concat(parameters('Spring_support_prod_apps_name'), '/audit-db')]",
+            "name": "[concat(parameters('name'), '/audit-db')]",
             "location": "eastus",
             "dependsOn": [
-                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support_prod_apps_name'))]"
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('name'))]"
             ],
             "properties": {
                 "addonConfigs": {
@@ -61,10 +62,10 @@
         {
             "type": "Microsoft.AppPlatform/Spring/apps",
             "apiVersion": "2022-09-01-preview",
-            "name": "[concat(parameters('Spring_support_prod_apps_name'), '/catalog-gw')]",
+            "name": "[concat(parameters('name'), '/catalog-gw')]",
             "location": "eastus",
             "dependsOn": [
-                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support_prod_apps_name'))]"
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('name'))]"
             ],
             "properties": {
                 "addonConfigs": {
@@ -94,10 +95,10 @@
         {
             "type": "Microsoft.AppPlatform/Spring/apps",
             "apiVersion": "2022-09-01-preview",
-            "name": "[concat(parameters('Spring_support_prod_apps_name'), '/catalog-msite')]",
+            "name": "[concat(parameters('name'), '/catalog-msite')]",
             "location": "eastus",
             "dependsOn": [
-                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support_prod_apps_name'))]"
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('name'))]"
             ],
             "properties": {
                 "addonConfigs": {
@@ -127,10 +128,10 @@
         {
             "type": "Microsoft.AppPlatform/Spring/apps",
             "apiVersion": "2022-09-01-preview",
-            "name": "[concat(parameters('Spring_support_prod_apps_name'), '/config-db')]",
+            "name": "[concat(parameters('name'), '/config-db')]",
             "location": "eastus",
             "dependsOn": [
-                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support_prod_apps_name'))]"
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('name'))]"
             ],
             "properties": {
                 "addonConfigs": {
@@ -160,10 +161,10 @@
         {
             "type": "Microsoft.AppPlatform/Spring/apps",
             "apiVersion": "2022-09-01-preview",
-            "name": "[concat(parameters('Spring_support_prod_apps_name'), '/elastic-svc')]",
+            "name": "[concat(parameters('name'), '/elastic-svc')]",
             "location": "eastus",
             "dependsOn": [
-                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support_prod_apps_name'))]"
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('name'))]"
             ],
             "properties": {
                 "addonConfigs": {
@@ -193,10 +194,10 @@
         {
             "type": "Microsoft.AppPlatform/Spring/apps",
             "apiVersion": "2022-09-01-preview",
-            "name": "[concat(parameters('Spring_support_prod_apps_name'), '/file-processor-svc')]",
+            "name": "[concat(parameters('name'), '/file-processor-svc')]",
             "location": "eastus",
             "dependsOn": [
-                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support_prod_apps_name'))]"
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('name'))]"
             ],
             "properties": {
                 "addonConfigs": {
@@ -226,10 +227,10 @@
         {
             "type": "Microsoft.AppPlatform/Spring/apps",
             "apiVersion": "2022-09-01-preview",
-            "name": "[concat(parameters('Spring_support_prod_apps_name'), '/supplier-db')]",
+            "name": "[concat(parameters('name'), '/supplier-db')]",
             "location": "eastus",
             "dependsOn": [
-                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support_prod_apps_name'))]"
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('name'))]"
             ],
             "properties": {
                 "addonConfigs": {
@@ -259,10 +260,10 @@
         {
             "type": "Microsoft.AppPlatform/Spring/apps/deployments",
             "apiVersion": "2022-09-01-preview",
-            "name": "[concat(parameters('Spring_support_prod_apps_name'), '/audit-db/default')]",
+            "name": "[concat(parameters('name'), '/audit-db/default')]",
             "dependsOn": [
-                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('Spring_support_prod_apps_name'), 'audit-db')]",
-                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support_prod_apps_name'))]"
+                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('name'), 'audit-db')]",
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('name'))]"
             ],
             "sku": {
                 "name": "S0",
@@ -305,10 +306,10 @@
         {
             "type": "Microsoft.AppPlatform/Spring/apps/deployments",
             "apiVersion": "2022-09-01-preview",
-            "name": "[concat(parameters('Spring_support_prod_apps_name'), '/catalog-gw/default')]",
+            "name": "[concat(parameters('name'), '/catalog-gw/default')]",
             "dependsOn": [
-                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('Spring_support_prod_apps_name'), 'catalog-gw')]",
-                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support_prod_apps_name'))]"
+                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('name'), 'catalog-gw')]",
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('name'))]"
             ],
             "sku": {
                 "name": "S0",
@@ -354,10 +355,10 @@
         {
             "type": "Microsoft.AppPlatform/Spring/apps/deployments",
             "apiVersion": "2022-09-01-preview",
-            "name": "[concat(parameters('Spring_support_prod_apps_name'), '/catalog-msite/default')]",
+            "name": "[concat(parameters('name'), '/catalog-msite/default')]",
             "dependsOn": [
-                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('Spring_support_prod_apps_name'), 'catalog-msite')]",
-                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support_prod_apps_name'))]"
+                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('name'), 'catalog-msite')]",
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('name'))]"
             ],
             "sku": {
                 "name": "S0",
@@ -400,10 +401,10 @@
         {
             "type": "Microsoft.AppPlatform/Spring/apps/deployments",
             "apiVersion": "2022-09-01-preview",
-            "name": "[concat(parameters('Spring_support_prod_apps_name'), '/config-db/default')]",
+            "name": "[concat(parameters('name'), '/config-db/default')]",
             "dependsOn": [
-                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('Spring_support_prod_apps_name'), 'config-db')]",
-                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support_prod_apps_name'))]"
+                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('name'), 'config-db')]",
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('name'))]"
             ],
             "sku": {
                 "name": "S0",
@@ -446,10 +447,10 @@
         {
             "type": "Microsoft.AppPlatform/Spring/apps/deployments",
             "apiVersion": "2022-09-01-preview",
-            "name": "[concat(parameters('Spring_support_prod_apps_name'), '/elastic-svc/default')]",
+            "name": "[concat(parameters('name'), '/elastic-svc/default')]",
             "dependsOn": [
-                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('Spring_support_prod_apps_name'), 'elastic-svc')]",
-                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support_prod_apps_name'))]"
+                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('name'), 'elastic-svc')]",
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('name'))]"
             ],
             "sku": {
                 "name": "S0",
@@ -492,10 +493,10 @@
         {
             "type": "Microsoft.AppPlatform/Spring/apps/deployments",
             "apiVersion": "2022-09-01-preview",
-            "name": "[concat(parameters('Spring_support_prod_apps_name'), '/file-processor-svc/default')]",
+            "name": "[concat(parameters('name'), '/file-processor-svc/default')]",
             "dependsOn": [
-                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('Spring_support_prod_apps_name'), 'file-processor-svc')]",
-                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support_prod_apps_name'))]"
+                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('name'), 'file-processor-svc')]",
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('name'))]"
             ],
             "sku": {
                 "name": "S0",
@@ -538,10 +539,10 @@
         {
             "type": "Microsoft.AppPlatform/Spring/apps/deployments",
             "apiVersion": "2022-09-01-preview",
-            "name": "[concat(parameters('Spring_support_prod_apps_name'), '/supplier-db/default')]",
+            "name": "[concat(parameters('name'), '/supplier-db/default')]",
             "dependsOn": [
-                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('Spring_support_prod_apps_name'), 'supplier-db')]",
-                "[resourceId('Microsoft.AppPlatform/Spring', parameters('Spring_support_prod_apps_name'))]"
+                "[resourceId('Microsoft.AppPlatform/Spring/apps', parameters('name'), 'supplier-db')]",
+                "[resourceId('Microsoft.AppPlatform/Spring', parameters('name'))]"
             ],
             "sku": {
                 "name": "S0",
@@ -579,6 +580,44 @@
                     }
                 },
                 "active": true
+            }
+        },
+        {
+            "type": "Microsoft.Insights/components",
+            "name": "insight203307",
+            "apiVersion": "2015-05-01",
+            "location": "eastus",
+            "kind": "web",
+            "properties": {
+                "Application_Type": "web",
+                "ApplicationId": "insight203307",
+                "Flow_Type": "Bluefield",
+                "Request_Source": "rest"
+            }
+        },
+        {
+            "apiVersion": "2020-11-01-preview",
+            "name": "[concat(parameters('name'),'/default')]",
+            "type": "Microsoft.AppPlatform/Spring/monitoringSettings",
+            "properties": {
+                "traceEnabled": true,
+                "appInsightsInstrumentationKey": "[reference(resourceId('Microsoft.Insights/components','insight203307'),'2015-05-01').ConnectionString]",
+                "appInsightsSamplingRate": 10
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.AppPlatform/Spring',parameters('name'))]",
+                "[resourceId('Microsoft.Insights/components','insight203307')]"
+            ]
+        },
+        {
+            "type": "Microsoft.OperationalInsights/workspaces",
+            "apiVersion": "2015-11-01-preview",
+            "name": "DefaultWorkspace-a5f0d484-b839-46c0-b271-4820c7034781-la6p5eei",
+            "location": "East US",
+            "properties": {
+                "sku": {
+                    "name": "pergb2018"
+                }
             }
         }
     ]
