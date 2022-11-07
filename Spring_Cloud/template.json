@@ -46,7 +46,7 @@
                     "mountPath": "/tmp"
                 },
                 "persistentDisk": {
-                    "sizeInGB": 0,
+                    "sizeInGB": 1,
                     "mountPath": "/persistent"
                 },
                 "enableEndToEndTLS": false,
@@ -79,7 +79,7 @@
                     "mountPath": "/tmp"
                 },
                 "persistentDisk": {
-                    "sizeInGB": 0,
+                    "sizeInGB": 1,
                     "mountPath": "/persistent"
                 },
                 "enableEndToEndTLS": false,
