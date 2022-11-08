@@ -13,13 +13,13 @@
             "type": "securestring"
         },
         "location": {
-            "defaultValue": "west-us",
+            "defaultValue": "East US",
             "type": "String"
         }
     },
     "variables": {},
     "resources": [
-        {
+         {
             "type": "Microsoft.DBforMySQL/flexibleServers",
             "apiVersion": "2021-12-01-preview",
             "name": "[parameters('flexibleServers_support_prod_mysql_name')]",
@@ -36,22 +36,19 @@
                     "iops": 988,
                     "autoGrow": "Enabled"
                 },
-                "version": "5.7",
-                "availabilityZone": "3"
-                },
-                "replicationRole": "None",
-                "network": {},
-                "backup": {
-                    "backupRetentionDays": 4,
-                    "geoRedundantBackup": "Disabled"
-                },
-                "highAvailability": {
-                    "mode": "ZoneRedundant",
-                    "standbyAvailabilityZone": "1"
-                }
+                
+                 "properties": {
+                   "administratorLogin": "string",
+                   "administratorLoginPassword": "string",
+                   "availabilityZone": "string",
+                   "backup": {
+                     "backupRetentionDays": "int",
+                     "geoRedundantBackup": "string"
+                   }
+                 }  
             }
-        },
-        {
+          },
+           {
             "type": "Microsoft.DBforMySQL/flexibleServers/databases",
             "apiVersion": "2021-12-01-preview",
             "name": "[concat(parameters('flexibleServers_support_prod_mysql_name'), '/information_schema')]",
@@ -62,8 +59,8 @@
                 "charset": "utf8",
                 "collation": "utf8_general_ci"
             }
-        },
-        {
+          },
+          {
             "type": "Microsoft.DBforMySQL/flexibleServers/databases",
             "apiVersion": "2021-12-01-preview",
             "name": "[concat(parameters('flexibleServers_support_prod_mysql_name'), '/mysql')]",
@@ -74,7 +71,7 @@
                 "charset": "latin1",
                 "collation": "latin1_swedish_ci"
             }
-        },
+          },
         {
             "type": "Microsoft.DBforMySQL/flexibleServers/databases",
             "apiVersion": "2021-12-01-preview",
