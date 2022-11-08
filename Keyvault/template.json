@@ -2,273 +2,34 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "vaults_support_prod_keyvault_name": {
-            "defaultValue": "support-prod1-keyvault",
-            "type": "String"
-        },
-        "location": {
-            "defaultValue": "west-us",
+        "vaults_chak_KV_name": {
+            "defaultValue": "chak-KV",
             "type": "String"
         }
-    },
+     },
     "variables": {},
     "resources": [
         {
             "type": "Microsoft.KeyVault/vaults",
             "apiVersion": "2022-07-01",
-            "name": "[parameters('vaults_support_prod_keyvault_name')]",
-            "location": "[parameters('location')]",
+            "name": "[parameters('vaults_chak_KV_name')]",
+            "location": "eastus",
             "properties": {
                 "sku": {
                     "family": "A",
                     "name": "Standard"
                 },
-                "tenantId": "e3d1e606-5d33-4006-a68c-3819c37c9f88",
-                "accessPolicies": [
-                    {
-                        "tenantId": "e3d1e606-5d33-4006-a68c-3819c37c9f88",
-                        "objectId": "346ed14e-172b-4217-b2a3-c4948f171bb0",
-                        "permissions": {
-                            "keys": [
-                                "Get",
-                                "List",
-                                "Update",
-                                "Create",
-                                "Import",
-                                "Delete",
-                                "Recover",
-                                "Backup",
-                                "Restore",
-                                "Decrypt",
-                                "Encrypt",
-                                "UnwrapKey",
-                                "WrapKey",
-                                "Verify",
-                                "Sign",
-                                "Purge",
-                                "Release",
-                                "Rotate",
-                                "GetRotationPolicy",
-                                "SetRotationPolicy"
-                            ],
-                            "secrets": [
-                                "Get",
-                                "List",
-                                "Set",
-                                "Delete",
-                                "Recover",
-                                "Backup",
-                                "Restore",
-                                "Purge"
-                            ],
-                            "certificates": [
-                                "Get",
-                                "List",
-                                "Update",
-                                "Create",
-                                "Import",
-                                "Delete",
-                                "Recover",
-                                "Backup",
-                                "Restore",
-                                "ManageContacts",
-                                "ManageIssuers",
-                                "GetIssuers",
-                                "ListIssuers",
-                                "SetIssuers",
-                                "DeleteIssuers",
-                                "Purge"
-                            ]
-                        }
-                    },
-                    {
-                        "tenantId": "e3d1e606-5d33-4006-a68c-3819c37c9f88",
-                        "objectId": "f033732e-0bc1-4821-9a42-13d0da5afe34",
-                        "permissions": {
-                            "keys": [
-                                "Get",
-                                "List",
-                                "Update",
-                                "Create",
-                                "Import",
-                                "Delete",
-                                "Recover",
-                                "Backup",
-                                "Restore",
-                                "Decrypt",
-                                "Encrypt",
-                                "UnwrapKey",
-                                "WrapKey",
-                                "Verify",
-                                "Sign",
-                                "Purge",
-                                "Release",
-                                "Rotate",
-                                "GetRotationPolicy",
-                                "SetRotationPolicy"
-                            ],
-                            "secrets": [
-                                "Get",
-                                "List",
-                                "Set",
-                                "Delete",
-                                "Recover",
-                                "Backup",
-                                "Restore",
-                                "Purge"
-                            ],
-                            "certificates": [
-                                "Get",
-                                "List",
-                                "Update",
-                                "Create",
-                                "Import",
-                                "Delete",
-                                "Recover",
-                                "Backup",
-                                "Restore",
-                                "ManageContacts",
-                                "ManageIssuers",
-                                "GetIssuers",
-                                "ListIssuers",
-                                "SetIssuers",
-                                "DeleteIssuers",
-                                "Purge"
-                            ]
-                        }
-                    },
-                    {
-                        "tenantId": "e3d1e606-5d33-4006-a68c-3819c37c9f88",
-                        "objectId": "32abcc6e-eed1-4099-a91d-c6e27f8418dd",
-                        "permissions": {
-                            "keys": [
-                                "Get",
-                                "List",
-                                "Backup",
-                                "Restore",
-                                "GetRotationPolicy",
-                                "SetRotationPolicy",
-                                "Rotate",
-                                "Delete",
-                                "Import",
-                                "Create",
-                                "Update",
-                                "Recover",
-                                "Purge",
-                                "Release",
-                                "Sign",
-                                "Verify",
-                                "WrapKey",
-                                "UnwrapKey",
-                                "Encrypt",
-                                "Decrypt"
-                            ],
-                            "secrets": [
-                                "Get",
-                                "List",
-                                "Set",
-                                "Delete",
-                                "Recover",
-                                "Backup",
-                                "Restore",
-                                "Purge"
-                            ],
-                            "certificates": [
-                                "Get",
-                                "List",
-                                "Update",
-                                "Create",
-                                "Import",
-                                "Delete",
-                                "Recover",
-                                "Backup",
-                                "Restore",
-                                "ManageContacts",
-                                "ManageIssuers",
-                                "GetIssuers",
-                                "ListIssuers",
-                                "SetIssuers",
-                                "DeleteIssuers",
-                                "Purge"
-                            ]
-                        }
-                    }
-                ],
-                "enabledForDeployment": true,
-                "enabledForDiskEncryption": true,
-                "enabledForTemplateDeployment": true,
+                "tenantId": "360bbccf-b8c9-487f-8739-8a588d581392",
+                "accessPolicies": [],
+                "enabledForDeployment": false,
+                "enabledForDiskEncryption": false,
+                "enabledForTemplateDeployment": false,
                 "enableSoftDelete": true,
                 "softDeleteRetentionInDays": 90,
                 "enableRbacAuthorization": false,
-                "vaultUri": "[concat('https://', parameters('vaults_support_prod_keyvault_name'), '.vault.azure.net/')]",
+                "vaultUri": "https://chak-kv.vault.azure.net/",
                 "provisioningState": "Succeeded",
                 "publicNetworkAccess": "Enabled"
-            }
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/keys",
-            "apiVersion": "2022-07-01",
-            "name": "[concat(parameters('vaults_support_prod_keyvault_name'), '/support-prod-certificate')]",
-            "location": "[parameters('location')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.KeyVault/vaults', parameters('vaults_support_prod_keyvault_name'))]"
-            ],
-            "properties": {
-                "attributes": {
-                    "enabled": true,
-                    "nbf": 1661486819,
-                    "exp": 1695787619
-                }
-            }
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/keys",
-            "apiVersion": "2022-07-01",
-            "name": "[concat(parameters('vaults_support_prod_keyvault_name'), '/WIldCardPA')]",
-            "location": "[parameters('location')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.KeyVault/vaults', parameters('vaults_support_prod_keyvault_name'))]"
-            ],
-            "properties": {
-                "attributes": {
-                    "enabled": true,
-                    "nbf": 1661486819,
-                    "exp": 1695787619
-                }
-            }
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "apiVersion": "2022-07-01",
-            "name": "[concat(parameters('vaults_support_prod_keyvault_name'), '/support-prod-certificate')]",
-            "location": "[parameters('location')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.KeyVault/vaults', parameters('vaults_support_prod_keyvault_name'))]"
-            ],
-            "properties": {
-                "contentType": "application/x-pkcs12",
-                "attributes": {
-                    "enabled": true,
-                    "nbf": 1661486819,
-                    "exp": 1695787619
-                }
-            }
-        },
-        {
-            "type": "Microsoft.KeyVault/vaults/secrets",
-            "apiVersion": "2022-07-01",
-            "name": "[concat(parameters('vaults_support_prod_keyvault_name'), '/WIldCardPA')]",
-            "location": "[parameters('location')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.KeyVault/vaults', parameters('vaults_support_prod_keyvault_name'))]"
-            ],
-            "properties": {
-                "contentType": "application/x-pkcs12",
-                "attributes": {
-                    "enabled": true,
-                    "nbf": 1661486819,
-                    "exp": 1695787619
-                }
             }
         }
     ]
