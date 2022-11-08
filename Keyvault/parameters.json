@@ -4,9 +4,6 @@
     "parameters": {
         "vaults_support_prod_keyvault_name": {
             "value": "support-prod1-keyvault"
-        },
-        "location": {
-            "value": "East US"
         }
     }
 }
