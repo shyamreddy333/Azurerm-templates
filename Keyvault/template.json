@@ -20,6 +20,90 @@
                     "name": "Standard"
                 },
                 "tenantId": "360bbccf-b8c9-487f-8739-8a588d581392",
+                "accessPolicies": [
+                    {
+                        "tenantId": "360bbccf-b8c9-487f-8739-8a588d581392",
+                        "objectId": "0ac24e32-923c-4c94-b0c2-7419f363a02a",
+                        "permissions": {
+                            "keys": [],
+                            "secrets": [
+                                "Get",
+                                "List",
+                                "Set",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore"
+                            ],
+                            "certificates": []
+                        }
+                    },
+                    {
+                        "tenantId": "360bbccf-b8c9-487f-8739-8a588d581392",
+                        "objectId": "7e536b33-8a33-4cd0-bfc9-1217b62b01b3",
+                        "applicationId": "00c01d72-a7ed-4f1a-bd27-8cb11d810ede",
+                        "permissions": {
+                            "keys": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore",
+                                "GetRotationPolicy",
+                                "SetRotationPolicy",
+                                "Rotate"
+                            ],
+                            "secrets": [
+                                "Get",
+                                "List",
+                                "Set",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore"
+                            ],
+                            "certificates": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore",
+                                "ManageContacts",
+                                "ManageIssuers",
+                                "GetIssuers",
+                                "ListIssuers",
+                                "SetIssuers",
+                                "DeleteIssuers"
+                            ]
+                        }
+                    },
+                    {
+                        "tenantId": "360bbccf-b8c9-487f-8739-8a588d581392",
+                        "objectId": "7e536b33-8a33-4cd0-bfc9-1217b62b01b3",
+                        "permissions": {
+                            "certificates": [],
+                            "keys": [],
+                            "secrets": [
+                                "Get",
+                                "List",
+                                "Set",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore"
+                            ]
+                        }
+                    }
+                ],
+                "tenantId": "360bbccf-b8c9-487f-8739-8a588d581392",
                 "accessPolicies": [],
                 "enabledForDeployment": false,
                 "enabledForDiskEncryption": false,
