@@ -10,6 +10,14 @@
         },
         "administratorLogin": {
             "value": "pasupportpd1"
-        }
+        },
+        "administratorLoginPassword": {
+            "reference": {
+               "keyVault": {
+                   "id": "/subscriptions/a5f0d484-b839-46c0-b271-4820c7034781/resourceGroups/pa-dev-rg/providers/Microsoft.KeyVault/vaults/chand-kv"
+               },
+               "secretName": "administratorLoginPassword"
+            }
+        },
     }
 }
